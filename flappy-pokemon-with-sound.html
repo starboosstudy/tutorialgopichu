@@ -554,20 +554,43 @@ const SFX = (function(){
   };
 })();
 
-/* ============ Storage helpers ============ */
+/* ============ Storage helpers (Supabase) ============ */
+const SUPABASE_URL = 'https://ozekxokfpbrlylflsvgn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im96ZWt4b2tmcGJybHlsZmxzdmduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MzAzMjMsImV4cCI6MjA5ODQwNjMyM30.Kd8X4A56FoS273dGaSzsBTiaRhzpaxFteHhVf8_y2hU';
+
 async function lbGet(){
   try{
-    const r = await window.storage.get('leaderboard', true);
-    return r ? JSON.parse(r.value) : [];
-  }catch(e){ return []; }
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/leaderboard?select=name,time_ms&order=time_ms.asc&limit=7`,
+      {
+        headers:{
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      }
+    );
+    if(!res.ok) return [];
+    const rows = await res.json();
+    return rows.map(r => ({ name: r.name, time: r.time_ms }));
+  }catch(e){ console.error('lbGet error', e); return []; }
 }
+
 async function lbAdd(name, timeMs){
-  let list = await lbGet();
-  list.push({name, time: timeMs});
-  list.sort((a,b)=>a.time-b.time);
-  list = list.slice(0,7);
-  try{ await window.storage.set('leaderboard', JSON.stringify(list), true); }catch(e){}
-  return list;
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
+      method: 'POST',
+      headers:{
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ name, time_ms: timeMs })
+    });
+  }catch(e){ console.error('lbAdd error', e); }
+  // ambil ulang dari server supaya leaderboard yang ditampilkan
+  // benar-benar data terbaru gabungan semua pemain
+  return await lbGet();
 }
 
 /* ============ Canvas setup ============ */
@@ -623,8 +646,8 @@ let rafId = null;
 
 const LEVEL_DEFS = {
   1: {name:"LEVEL 1", desc:"good morning", sky:["#FFE39B","#FFB85C"], ground:"#7CC25C", emoji:"🌅", needleCount: 1, bombCount:0, tightCount:0},
-  2: {name:"LEVEL 2", desc:"good evening", sky:["#FF9966","#5B5FAE"], ground:"#6FA84E", emoji:"🌇", needleCount: 2, bombCount:0, tightCount:0},
-  3: {name:"LEVEL 3", desc:"good night", sky:["#0B1230","#1B2750"], ground:"#27452E", emoji:"🌙", needleCount: 2, bombCount:0, tightCount:1},
+  2: {name:"LEVEL 2", desc:"good evening", sky:["#FF9966","#5B5FAE"], ground:"#6FA84E", emoji:"🌇", needleCount: 1, bombCount:0, tightCount:0},
+  3: {name:"LEVEL 3", desc:"good night", sky:["#0B1230","#1B2750"], ground:"#27452E", emoji:"🌙", needleCount: 1, bombCount:0, tightCount:0},
 };
 
 /* ============ DOM refs ============ */
