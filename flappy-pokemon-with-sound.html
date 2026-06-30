@@ -25,6 +25,7 @@
   *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
   html,body{
     margin:0; padding:0; height:100%;
+    height:calc(var(--vh, 1vh) * 100);
     font-family:'Press Start 2P', 'Courier New', monospace;
     background:#10141b;
     overflow:hidden;
@@ -39,7 +40,7 @@
   #stage{
     position:relative;
     width:min(100vw, 480px);
-    height:min(100vh, 800px);
+    height:min(calc(var(--vh, 1vh) * 100), 800px);
     background:#000;
     box-shadow:0 0 0 4px #10141b, 0 0 0 8px #3DBDE8, 0 0 40px rgba(0,0,0,0.6);
     overflow:hidden;
@@ -58,6 +59,8 @@
     padding:24px;
     gap:14px;
     z-index:30;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
   }
   .hidden{display:none !important;}
 
@@ -420,6 +423,18 @@
 
 <script>
 (function(){
+  // Fix mobile browsers (Safari/Chrome) where 100vh includes the address bar area,
+  // which can push buttons/overlays off-screen and make the game look "frozen".
+  function setRealVH(){
+    document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+  }
+  setRealVH();
+  window.addEventListener('resize', setRealVH);
+  window.addEventListener('orientationchange', setRealVH);
+})();
+</script>
+<script>
+(function(){
 "use strict";
 
 /* ============ Sound Engine (synth, Mario-ish, no files needed) ============ */
@@ -572,7 +587,7 @@ resize();
 
 /* ============ Quiz data ============ */
 const QUIZ = [
-  {q:"Siapa Owner GO ini?", opts:["Pichu","Dey","Pije"], correct:0},
+  {q:"Siapa Owner GO ini?", opts:["Pichu","Dey","Pije"], correct:1},
   {q:"Berapa hasil dari Member Longshot + Member Cortis + seluruh member NCT Wish?", opts:["15","16","14"], correct:0},
   {q:"Berapa banyak GO yang dimiliki GO Pichu?", opts:["10","3","4"], correct:1},
   {q:"HNR Legendaris (terheboh) GO Longshot adalah...", opts:["Gwen","Qyara","Nadia"], correct:2},
@@ -607,9 +622,9 @@ let lastTs = 0;
 let rafId = null;
 
 const LEVEL_DEFS = {
-  1: {name:"LEVEL 1", desc:"good morning", sky:["#FFE39B","#FFB85C"], ground:"#7CC25C", emoji:"🌅", needleCount: 8, bombCount:0, tightCount:0},
-  2: {name:"LEVEL 2", desc:"good evening", sky:["#FF9966","#5B5FAE"], ground:"#6FA84E", emoji:"🌇", needleCount: 10, bombCount:5, tightCount:0},
-  3: {name:"LEVEL 3", desc:"good night", sky:["#0B1230","#1B2750"], ground:"#27452E", emoji:"🌙", needleCount: 13, bombCount:2, tightCount:2},
+  1: {name:"LEVEL 1", desc:"good morning", sky:["#FFE39B","#FFB85C"], ground:"#7CC25C", emoji:"🌅", needleCount: 1, bombCount:0, tightCount:0},
+  2: {name:"LEVEL 2", desc:"good evening", sky:["#FF9966","#5B5FAE"], ground:"#6FA84E", emoji:"🌇", needleCount: 1, bombCount:1, tightCount:0},
+  3: {name:"LEVEL 3", desc:"good night", sky:["#0B1230","#1B2750"], ground:"#27452E", emoji:"🌙", needleCount: 2, bombCount:1, tightCount:1},
 };
 
 /* ============ DOM refs ============ */
@@ -1145,6 +1160,9 @@ function loop(ts){
 
 /* ============ Input ============ */
 function onTap(e){
+  // Don't hijack taps on interactive elements (name input, buttons, etc.)
+  // otherwise mobile keyboards won't open and buttons feel "frozen".
+  if(e.target.closest('input, button, textarea, a, select')) return;
   if(e.type==='touchstart') e.preventDefault();
   flap();
 }
