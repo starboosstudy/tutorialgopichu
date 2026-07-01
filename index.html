@@ -670,6 +670,210 @@
     text-shadow:0 2px 0 #1B1B2A;
   }
 
+  /* ===== WARNING PAGE ===== */
+  .warn-section{ background:#F2E3B8; }
+  .warn-stripe{
+    position:absolute; left:0; right:0; height:16px;
+    background: repeating-linear-gradient(135deg, var(--yellow) 0 18px, var(--ink) 18px 36px);
+    z-index:1;
+  }
+  .warn-stripe.top{ top:0; }
+  .warn-stripe.bottom{ bottom:0; }
+
+  .signpost-wrap{
+    display:flex; align-items:flex-end; justify-content:center;
+    gap:2.4rem; flex-wrap:wrap;
+    max-width:700px; margin:3.5rem auto 0 auto;
+    position:relative; z-index:1;
+  }
+  .signpost{ display:flex; flex-direction:column; align-items:center; }
+  .signpost-board{
+    background:
+      radial-gradient(ellipse 9px 5px at 22% 28%, rgba(0,0,0,0.18), transparent 70%),
+      radial-gradient(ellipse 7px 4px at 78% 68%, rgba(0,0,0,0.15), transparent 70%),
+      radial-gradient(ellipse 6px 4px at 55% 15%, rgba(0,0,0,0.12), transparent 70%),
+      repeating-linear-gradient(180deg, rgba(0,0,0,0.09) 0 2px, transparent 2px 7px),
+      linear-gradient(180deg, #C68A4E 0%, #A9723F 45%, #8B5A2B 100%);
+    border:4px solid #4A2F14;
+    box-shadow:0 6px 0 #3A2410, inset 0 0 0 2px rgba(0,0,0,0.12);
+    padding:0.9rem 2.2rem 0.9rem 1.2rem;
+    font-family:'Press Start 2P', monospace;
+    font-size:0.62rem;
+    line-height:1.7;
+    text-align:center;
+    color:#3A2410;
+    text-shadow:1px 1px 0 rgba(255,255,255,0.25);
+    transform:rotate(-2deg);
+    clip-path: polygon(0 0, 86% 0, 100% 50%, 86% 100%, 0 100%);
+  }
+  .signpost-pole{
+    width:16px; height:64px;
+    background:
+      repeating-linear-gradient(180deg, rgba(0,0,0,0.12) 0 3px, transparent 3px 9px),
+      linear-gradient(90deg, #6B4520 0%, #8B5A2B 50%, #6B4520 100%);
+    border:3px solid #4A2F14;
+    border-top:none;
+    margin-top:-4px;
+  }
+  .warn-chicken-btn{
+    background:none; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+  }
+  .warn-chicken-hop{ transform-origin:bottom center; position:relative; }
+  .warn-chicken-hop .chicken-icon{ width:60px; height:60px; }
+  .warn-chicken-btn:hover .chicken-icon{ transform:scale(1.1); }
+  .warn-chicken-shadow{
+    width:34px; height:8px; border-radius:50%;
+    background:rgba(27,27,42,0.3);
+    margin:0.2rem auto 0 auto;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+  .warn-chicken-hop.jumping{ animation: chickenHop 0.6s ease; }
+  .warn-chicken-hop.jumping ~ .warn-chicken-shadow{ animation: chickenShadow 0.6s ease; }
+  @keyframes chickenHop{
+    0%{ transform:translateY(0) rotate(0deg); }
+    30%{ transform:translateY(-46px) rotate(-8deg); }
+    60%{ transform:translateY(-62px) rotate(6deg); }
+    100%{ transform:translateY(0) rotate(0deg); }
+  }
+  @keyframes chickenShadow{
+    0%,100%{ opacity:0.3; transform:scale(1); }
+    50%{ opacity:0.1; transform:scale(0.5); }
+  }
+  .warn-chicken-cap{
+    font-family:'Press Start 2P', monospace;
+    font-size:0.55rem;
+    color:var(--ink);
+    background:rgba(255,255,255,0.7);
+    padding:0.3rem 0.5rem;
+  }
+
+  .warning-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:2.6rem;
+    max-width:1080px;
+    margin:0 auto;
+    align-items:start;
+    position:relative; z-index:1;
+  }
+  @media (max-width: 820px){
+    .warning-grid{ grid-template-columns:1fr; }
+  }
+
+  .warn-box{
+    background:var(--cloud);
+    border:4px solid var(--ink);
+    box-shadow:0 8px 0 var(--dirt-deep);
+    overflow:hidden;
+  }
+  .warn-box-title{
+    font-family:'Press Start 2P', monospace;
+    font-size:1rem;
+    line-height:1.6;
+    color:#fff;
+    text-align:center;
+    background:var(--red);
+    background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.15) 0 10px, transparent 10px 20px);
+    padding:1rem 1.2rem;
+    border-bottom:4px solid var(--ink);
+    text-shadow:2px 2px 0 var(--ink);
+  }
+  .x-icon{
+    display:inline-block;
+    color:var(--red);
+    font-weight:bold;
+    font-size:1.15em;
+    text-shadow:none;
+  }
+
+  .w-tree{
+    position:absolute; bottom:0;
+  }
+  .w-tree::before{
+    content:"";
+    position:absolute; bottom:38%; left:50%; transform:translateX(-50%);
+    width:100%; height:68%;
+    background:var(--grass-deep);
+    border-radius:50% 50% 42% 42%;
+    opacity:0.5;
+    box-shadow: inset 0 -10px 0 rgba(0,0,0,0.08);
+  }
+  .w-tree::after{
+    content:"";
+    position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:22%; height:40%;
+    background:var(--dirt-deep);
+    opacity:0.55;
+  }
+  .warn-box-body{ padding:1.3rem 1.4rem 1.6rem 1.4rem; font-size:1.12rem; line-height:1.55; color:#3A3A2E; }
+  .warn-box-body p{ margin:0 0 0.9rem 0; }
+  .warn-list{ margin:0 0 0.9rem 0; padding-left:1.4rem; }
+  .warn-list li{ margin-bottom:0.35rem; }
+  .warn-highlight{
+    background:#FFF1D6;
+    border:3px solid var(--yellow-deep);
+    padding:0.7rem 0.9rem;
+    font-weight:bold;
+  }
+  .warn-quotes{
+    background:#F2ECDC;
+    border:3px dashed var(--ink);
+    padding:0.7rem 0.9rem;
+    margin:0 0 0.9rem 0;
+    font-style:italic;
+  }
+  .warn-quotes p{ margin:0 0 0.35rem 0; }
+  .warn-quotes p:last-child{ margin-bottom:0; }
+  .warn-note{
+    background:#E6F5E9;
+    border:3px solid var(--grass-deep);
+    padding:0.7rem 0.9rem;
+    margin-bottom:0;
+  }
+
+  .warn-rules{ display:flex; flex-direction:column; gap:1.15rem; }
+  .rule-card{ display:flex; align-items:flex-start; gap:0.9rem; }
+  .rule-num{
+    flex:0 0 auto;
+    width:46px; height:46px;
+    background:var(--yellow-deep);
+    border:3px solid var(--ink);
+    box-shadow:0 5px 0 var(--dirt-deep), inset 0 -8px 0 rgba(0,0,0,0.18), inset 0 5px 0 rgba(255,255,255,0.4);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Press Start 2P', monospace;
+    font-size:1.05rem;
+    color:var(--ink);
+    position:relative;
+    margin-top:2px;
+  }
+  .rule-text{
+    flex:1;
+    background:var(--cloud);
+    border:3px solid var(--ink);
+    padding:0.75rem 1rem;
+    font-size:1.08rem;
+    line-height:1.4;
+    position:relative;
+    box-shadow:3px 3px 0 rgba(27,27,42,0.2);
+  }
+  .rule-text::before{
+    content:"";
+    position:absolute; left:-10px; top:15px;
+    width:0; height:0;
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+    border-right:10px solid var(--ink);
+  }
+  .rule-text::after{
+    content:"";
+    position:absolute; left:-6px; top:15px;
+    width:0; height:0;
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+    border-right:10px solid var(--cloud);
+  }
+
   .ribbon-divider{
     display:flex; align-items:center; gap:1rem;
     max-width:340px; margin:0 auto 1.8rem auto;
@@ -1123,6 +1327,105 @@
   <div class="terms-field" id="termsField"></div>
 </section>
 
+<!-- ============ WARNING ============ -->
+<section id="warning" class="warn-section">
+  <div class="warn-stripe top"></div>
+  <div class="warn-stripe bottom"></div>
+  <div class="world-decor">
+    <div class="w-cloud" style="top:12%; left:8%; width:60px; height:18px; border-radius:9px;"></div>
+    <div class="w-cloud" style="top:16%; right:10%; width:70px; height:20px; border-radius:10px;"></div>
+    <div class="w-block" style="top:22%; left:8%; width:24px; height:24px;"></div>
+    <div class="w-block" style="top:30%; right:10%; width:24px; height:24px;"></div>
+    <div class="w-tree" style="left:2%; width:64px; height:120px;"></div>
+    <div class="w-tree" style="left:9%; width:50px; height:96px;"></div>
+    <div class="w-tree" style="right:2%; width:64px; height:120px;"></div>
+    <div class="w-tree" style="right:9%; width:50px; height:96px;"></div>
+  </div>
+
+  <div class="section-head">
+    <div class="paw-divider">
+      <div class="pawline"></div>
+      <svg class="paw" viewBox="0 0 24 24" fill="#1B1B2A"><ellipse cx="12" cy="16" rx="6" ry="5"/><ellipse cx="5" cy="8" rx="2.4" ry="3"/><ellipse cx="11" cy="5" rx="2.4" ry="3"/><ellipse cx="17" cy="6" rx="2.4" ry="3"/><ellipse cx="20.5" cy="11" rx="2.2" ry="2.8"/></svg>
+      <div class="pawline"></div>
+    </div>
+    <div class="label" style="background:var(--red); color:#fff;">⚠ PERHATIAN ⚠</div>
+    <h2>WARNING</h2>
+    <p class="desc">Baca baik baik sebelum bertanya ya, biar sama sama enak.</p>
+  </div>
+
+  <div class="warning-grid">
+    <div class="warn-box pixel-frame">
+      <div class="warn-box-title">GO BUKAN WARUNG!!!</div>
+      <div class="warn-box-body">
+        <p>Teman Pichu, GO (Group Order) adalah bisnis <strong>"JASA"</strong>.</p>
+        <p>Kami (admin) membuka jasa untuk membantu kalian mendapatkan barang kalian, baik itu di dalam negri maupun di luar negri.</p>
+        <p>Jadi konsepnya:</p>
+        <ul class="warn-list">
+          <li>Kami mencarikan barang yang anda inginkan</li>
+          <li>Kami melakukan negosiasi dengan seller</li>
+          <li>Kami mengurus segala pengiriman dari seller</li>
+        </ul>
+        <p class="warn-highlight"><span class="x-icon">✕</span> Kami <strong>BUKAN PENJUAL RD STOCK</strong>. Kami juga bukan kulakan di seller A, lalu dijual kembali. <span class="x-icon">✕</span></p>
+        <p>Pertanyaan seputar:</p>
+        <div class="warn-quotes">
+          <p>"kak kapan albumnya ready lagi?"</p>
+          <p>"kak kapan open po lagi?"</p>
+          <p>"kak mau liat pc ohyulnya dong, ada apa aja?"</p>
+          <p>"kak pc yushi ada?"</p>
+        </div>
+        <p>dan pertanyaan yang biasanya ditanyakan di toko/warung lainnya <strong>TIDAK BISA TERJAWAB</strong>.</p>
+        <p class="warn-note">Note: intinya jajanan yang ada, adalah jajanan yang di-drop admin. Jika kamu menginginkan PC A, silahkan masukkan ke <strong>GROUP WISHLIST</strong>. Admin akan bantu cari.</p>
+      </div>
+    </div>
+
+    <div class="warn-rules">
+      <div class="rule-card">
+        <div class="rule-num">1</div>
+        <div class="rule-text">Dilarang unsent, setelah coret.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">2</div>
+        <div class="rule-text">Jika ingin unsent, tanyakan admin dulu.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">3</div>
+        <div class="rule-text">Dilarang kirim chat yang membuat member lain tidak nyaman, baik secara pribadi maupun group.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">4</div>
+        <div class="rule-text">Silahkan izin dulu sebelum WTS di group.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">5</div>
+        <div class="rule-text">Dilarang mengirim link-link eksternal. Izin dulu ke admin.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="signpost-wrap">
+    <div class="signpost">
+      <div class="signpost-board">MILEA,<br>READ CAREFULLY<br>BEFORE ASK</div>
+      <div class="signpost-pole"></div>
+    </div>
+    <button class="warn-chicken-btn" id="warnChicken" aria-label="Pencet ayamnya biar loncat">
+      <div class="warn-chicken-hop" id="warnChickenHop">
+        <svg class="chicken-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14" y="4" width="6" height="4" fill="#E84855"/>
+          <rect x="10" y="8" width="14" height="4" fill="#FFFFFF"/>
+          <rect x="8" y="12" width="18" height="8" fill="#FFFFFF"/>
+          <rect x="8" y="12" width="6" height="8" fill="#F4F0E6"/>
+          <rect x="22" y="14" width="4" height="3" fill="#FFA62B"/>
+          <rect x="12" y="14" width="2" height="2" fill="#1B1B2A"/>
+          <rect x="10" y="20" width="14" height="4" fill="#FFFFFF"/>
+          <rect x="9" y="24" width="3" height="4" fill="#FFA62B"/>
+          <rect x="20" y="24" width="3" height="4" fill="#FFA62B"/>
+        </svg>
+      </div>
+      <div class="warn-chicken-shadow" id="warnChickenShadow"></div>
+    </button>
+  </div>
+</section>
+
 <!-- ============ HNR MEMORIAL ============ -->
 <section class="hnr-section" id="hnr">
   <div class="world-decor">
@@ -1321,19 +1624,34 @@
     { icon:"%", cap:"Tax berapa?", title:"LV.2-8 Kak tax nya berapa?",
       body:`• <strong>Album SEA</strong>: berat album × Rp100/gram<br>
       • <strong>Album Air</strong>: berat album × Rp210/gram<br>
-      • <strong>PC</strong>: sekitar Rp6.000–7.000` },
+      • <strong>PC</strong>: sekitar Rp6.000–7.000<br><br>
+      kak aku pernah beli album. adminnya bilang harga 50.000 bersih INA est.100 gram. kalo berat naik, harga naik. kalo berat turun, harga turun. maksudnya apa ya? <br><br>
+      jadi tax itu dihitung berdasarkan berat barang dan rate saat itu.
+      1. kasus barang-barang PO, admin belum tau berat pasti barangnya. jadi pake yang namanya estimasi. jika pas sampai wh ina dan ditimbang naik maka harga juga akan ikut naik
+      biasanya tidak terlalu banyak kok naiknya (in case naik)
+      2. kasus 2 barang yang sama, beda Batch tapi taxnya beda.<br>
+      hmm kalo ini biasanya problem di beacukainya teman-teman. dari wh biasanya ada penawaran untuk mengajukan banding. tapi di WH tersebut kan nggak cuma ada barang kita. ada barang orang lain juga.
+      jadi kalo kebanyakan tidak mau banding ya kita bisa apa.` },
     { icon:"✓", cap:"Kapan bisa co?", title:"LV.2-9 Kapan bisa co kak?",
-      body:`Saat barang sudah arrived dan kamu sudah <strong>lunas</strong> ya.` },
+      body:`Saat barang sudah arrived admin dan kamu sudah <strong>lunas</strong> ya. <br><br>
+      barang ready indo juga harus nunggu arived admin kak?<br>
+      yep, semua barang regulasianya sama.<br><br>
+      kok harus nunggu arived admin sih kak?<br>
+      kalo kamu CO terus barang belum arived admin. admin mau kirim apa ya(?). terus kalo nanti kamu nunggu nya kelamaan gimana tuh (?)` },
     { icon:"⏳", cap:"Izin pay?", title:"LV.2-10 Kak boleh izin pay?",
       body:`Boleh. Silahkan izin ke admin <strong>Dimas</strong>.` },
     { icon:"!", cap:"Denda berapa?", title:"LV.2-11 Denda nya berapa ya kak?",
-      body:`Besar denda adalah <strong>5k/hari</strong> terhitung dari tenggat waktu pembayaran yang sudah ditulis di <strong>"UPNOTES"</strong>.` },
+      body:`Besar denda adalah <strong>5k/hari</strong> terhitung dari tenggat waktu pembayaran yang sudah ditulis di <strong>"UPNOTES"</strong>.<br><br>
+      kok ada denda segala sih kak?
+      hmmm...pada dasarnya kita membantu kamu buat jajan. so, yang jajan kamu. basically kita nalangin jajananmu dulu.<br>
+      kalo kamu telat teruss-terusan, uang GO tidak akan berputar. admin tidak bisa membantu teman lain yang ingin jajan juga. <br>
+      denda diadakan agar pelaku Jera` },
   ];
 
   const termsData = [
     { icon:"OS", cap:"OPER SLOT", title:"OS — Oper Slot",
       body:`<strong>OS</strong> = oper slot, yaitu memindahkan nama kepemilikan ke orang lain.<br><br>
-      <em>Contoh:</em> aku beli PC Yushi, ternyata aku sudah punya. Aku mau kasih PC Yushi-ku ke Dimas — maka aku OS PC-ku ke Dimas.<br><br>
+      <em>Contoh:</em> aku beli PC Yushi, ternyata aku sudah punya. Aku mau kasih PC Yushi-ku ke Dimas, maka aku OS PC-ku ke Dimas.<br><br>
       <strong>Cara OS:</strong><br>
       1. Isi form yang tersedia <a href="https://forms.gle/BtQCt7MayTTtjbcAA" target="_blank" rel="noopener">forms.gle/BtQCt7MayTTtjbcAA</a><br>
       2. OS hanya bisa dilakukan jika pembayaran sudah lunas (minimal DP)` },
@@ -1461,6 +1779,18 @@
     lv2Cat.addEventListener('mouseleave', stopPettingLater);
     lv2Cat.addEventListener('click', () => { startPetting(); stopPettingLater(); });
     lv2Cat.addEventListener('touchstart', () => { startPetting(); stopPettingLater(); }, { passive:true });
+  }
+
+  // ===== WARNING chicken jump =====
+  const warnChicken = document.getElementById('warnChicken');
+  const warnChickenHop = document.getElementById('warnChickenHop');
+  if(warnChicken && warnChickenHop){
+    warnChicken.addEventListener('click', () => {
+      playBoing();
+      warnChickenHop.classList.remove('jumping');
+      void warnChickenHop.offsetWidth;
+      warnChickenHop.classList.add('jumping');
+    });
   }
 
   // ===== LV.7 PvZ flower =====
